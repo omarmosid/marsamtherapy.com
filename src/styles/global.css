@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin '@tailwindcss/typography';
 
 /* Fonts */
 @import '@fontsource/libre-baskerville/400.css';

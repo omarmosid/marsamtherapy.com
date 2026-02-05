@@ -1,15 +1,19 @@
 ---
 interface Props {
 	href?: string;
+	type?: 'button' | 'submit' | 'reset';
 	variant?: 'primary' | 'secondary' | 'outline';
 	size?: 'sm' | 'md' | 'lg';
+	fullWidth?: boolean;
 	class?: string;
 }
 
 const { 
 	href, 
+	type = 'button',
 	variant = 'primary', 
 	size = 'md',
+	fullWidth = false,
 	class: className = '' 
 } = Astro.props;
 
@@ -27,9 +31,9 @@ const sizes = {
 	lg: 'px-8 py-4 text-lg',
 };
 
-const classes = `${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`;
+const widthClass = fullWidth ? 'w-full' : '';
 
-const Tag = href ? 'a' : 'button';
+const classes = `${baseStyles} ${variants[variant]} ${sizes[size]} ${widthClass} ${className}`;
 ---
 
 {href ? (
@@ -37,7 +41,7 @@ const Tag = href ? 'a' : 'button';
 		<slot />
 	</a>
 ) : (
-	<button class={classes}>
+	<button type={type} class={classes}>
 		<slot />
 	</button>
 )}

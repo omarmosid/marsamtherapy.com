@@ -1,0 +1,20 @@
+---
+interface Props {
+	for: string;
+	required?: boolean;
+	class?: string;
+}
+
+const {
+	for: htmlFor,
+	required = false,
+	class: className = ''
+} = Astro.props;
+
+const labelStyles = 'block text-sm font-medium text-charcoal mb-2';
+---
+
+<label for={htmlFor} class={`${labelStyles} ${className}`}>
+	<slot />
+	{required && <span class="text-primary ml-1">*</span>}
+</label>

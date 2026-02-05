@@ -1,0 +1,41 @@
+---
+interface Props {
+	id: string;
+	name: string;
+	label?: string;
+	placeholder?: string;
+	required?: boolean;
+	rows?: number;
+	value?: string;
+	class?: string;
+}
+
+const {
+	id,
+	name,
+	label,
+	placeholder,
+	required = false,
+	rows = 5,
+	value,
+	class: className = ''
+} = Astro.props;
+
+const textareaStyles = 'w-full px-4 py-3 rounded-lg border border-night-lighter bg-night-light text-charcoal placeholder:text-charcoal-dark focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all resize-none';
+---
+
+<div class={className}>
+	{label && (
+		<label for={id} class="block text-sm font-medium text-charcoal mb-2">
+			{label}
+		</label>
+	)}
+	<textarea
+		id={id}
+		name={name}
+		placeholder={placeholder}
+		required={required}
+		rows={rows}
+		class={textareaStyles}
+	>{value}</textarea>
+</div>
