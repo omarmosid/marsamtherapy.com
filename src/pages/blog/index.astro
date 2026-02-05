@@ -27,9 +27,50 @@ const posts = allPosts
 			? (typeof post.data.image.url === 'string' ? post.data.image.url : post.data.image.url.src)
 			: 'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=600&q=80&auto=format&fit=crop',
 	}));
+
+// Structured data for blog listing
+const structuredData = {
+	"@context": "https://schema.org",
+	"@type": "Blog",
+	"@id": new URL('/blog', Astro.site).toString(),
+	"url": new URL('/blog', Astro.site).toString(),
+	"name": "Marsam Therapy Blog",
+	"description": "Insights on mental health, faith-informed healing, and personal growth",
+	"author": {
+		"@type": "Person",
+		"name": "Mariya Samreen",
+		"jobTitle": "Psychological Counsellor"
+	},
+	"publisher": {
+		"@type": "Organization",
+		"name": "Marsam Therapy",
+		"logo": {
+			"@type": "ImageObject",
+			"url": new URL('/logo.png', Astro.site).toString()
+		}
+	},
+	"blogPost": allPosts.map((post) => ({
+		"@type": "BlogPosting",
+		"headline": post.data.title,
+		"description": post.data.description,
+		"datePublished": post.data.pubDate.toISOString(),
+		"author": {
+			"@type": "Person",
+			"name": post.data.author
+		},
+		"url": new URL(`/blog/${post.slug}`, Astro.site).toString()
+	}))
+};
 ---
 
-<Layout title="Blog" description="Insights on mental health, faith-informed healing, and personal growth from Mariya Samreen.">
+<Layout 
+	title="Blog" 
+	description="Insights on mental health, faith-informed healing, and personal growth from Mariya Samreen. Read about therapy, resilience, anxiety management, and spiritual wellness."
+	keywords={['mental health blog', 'therapy insights', 'faith-informed healing', 'personal growth', 'psychological counselling', 'Islamic therapy', 'anxiety management', 'trauma recovery']}
+>
+	<Fragment slot="head">
+		<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+	</Fragment>
 	<!-- Hero Section -->
 	<section class="relative py-20 sm:py-28 bg-gradient-to-br from-night via-night-light to-night-lighter overflow-hidden">
 		<ConstellationBg opacity={0.3} />

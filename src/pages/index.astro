@@ -5,9 +5,104 @@ import AboutSection from '../components/home/AboutSection.astro';
 import ServicesSection from '../components/home/ServicesSection.astro';
 import ApproachSection from '../components/home/ApproachSection.astro';
 import ContactSection from '../components/home/ContactSection.astro';
+
+// Structured data for the homepage
+const structuredData = {
+	"@context": "https://schema.org",
+	"@type": "ProfessionalService",
+	"@id": Astro.site?.toString(),
+	"name": "Marsam Therapy",
+	"alternateName": "Mariya Samreen - Psychological Counsellor",
+	"url": Astro.site?.toString(),
+	"logo": new URL('/logo.png', Astro.site).toString(),
+	"image": new URL('/og-image.jpg', Astro.site).toString(),
+	"description": "Faith-informed psychological counselling services with Islamic principles. Specializing in anxiety, stress management, trauma counselling, and life transitions.",
+	"telephone": "+1-XXX-XXX-XXXX",
+	"email": "contact@marsamtherapy.com",
+	"priceRange": "$$",
+	"address": {
+		"@type": "PostalAddress",
+		"addressLocality": "Your City",
+		"addressRegion": "Your Region",
+		"addressCountry": "Your Country"
+	},
+	"geo": {
+		"@type": "GeoCoordinates",
+		"latitude": "0.0",
+		"longitude": "0.0"
+	},
+	"openingHoursSpecification": [
+		{
+			"@type": "OpeningHoursSpecification",
+			"dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+			"opens": "09:00",
+			"closes": "17:00"
+		}
+	],
+	"sameAs": [
+		"https://twitter.com/marsamtherapy",
+		"https://facebook.com/marsamtherapy",
+		"https://instagram.com/marsamtherapy"
+	],
+	"provider": {
+		"@type": "Person",
+		"name": "Mariya Samreen",
+		"jobTitle": "Psychological Counsellor",
+		"description": "Experienced psychological counsellor specializing in faith-informed therapy with Islamic principles. Over 4 years of experience helping individuals, families, and communities.",
+		"knowsLanguage": ["English", "Hindi", "Urdu"],
+		"alumniOf": "Your University",
+		"hasCredential": "Licensed Psychological Counsellor"
+	},
+	"hasOfferCatalog": {
+		"@type": "OfferCatalog",
+		"name": "Therapy Services",
+		"itemListElement": [
+			{
+				"@type": "Offer",
+				"itemOffered": {
+					"@type": "Service",
+					"name": "Individual Therapy",
+					"description": "One-on-one counselling sessions for personal growth and mental wellness"
+				}
+			},
+			{
+				"@type": "Offer",
+				"itemOffered": {
+					"@type": "Service",
+					"name": "Trauma Counselling",
+					"description": "Specialized support for processing and healing from traumatic experiences"
+				}
+			},
+			{
+				"@type": "Offer",
+				"itemOffered": {
+					"@type": "Service",
+					"name": "Anxiety & Stress Management",
+					"description": "Evidence-based techniques for managing anxiety and stress"
+				}
+			},
+			{
+				"@type": "Offer",
+				"itemOffered": {
+					"@type": "Service",
+					"name": "Faith-Informed Therapy",
+					"description": "Therapy that integrates Islamic principles with psychological approaches"
+				}
+			}
+		]
+	}
+};
 ---
 
-<Layout title="Home">
+<Layout 
+	title="Home"
+	description="Mariya Samreen - Psychological Counsellor offering faith-informed therapy with Islamic principles. Specializing in anxiety, trauma, stress management, and life transitions."
+	keywords={['therapy', 'counselling', 'faith-informed therapy', 'Islamic counselling', 'mental health', 'psychological counsellor', 'anxiety therapy', 'trauma counselling', 'stress management', 'Mariya Samreen']}
+>
+	<Fragment slot="head">
+		<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+	</Fragment>
+	
 	<HeroSection />
 	<AboutSection />
 	<ServicesSection />

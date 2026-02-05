@@ -21,7 +21,7 @@ This document provides guidelines for AI coding agents working in this repositor
 - **Fonts**: Libre Baskerville (serif, self-hosted via @fontsource), system fonts (sans-serif)
 - **Icons**: Heroicons v2
 - **Language**: TypeScript (strict mode)
-- **Deployment**: Cloudflare Workers/Pages
+- **Deployment**: Cloudflare Workers
 - **Package Manager**: npm
 - **Module System**: ES Modules (`"type": "module"`)
 
@@ -311,6 +311,64 @@ const sortedPosts = posts.sort((a, b) =>
 
 // Render post content
 const { Content } = await post.render();
+```
+
+## SEO Implementation
+
+The site includes comprehensive SEO features across all pages.
+
+### Meta Tags
+
+All pages include:
+- **Title & Description**: Optimized for search engines
+- **Keywords**: Relevant keywords for each page
+- **Canonical URLs**: Prevents duplicate content issues
+- **Open Graph**: Facebook sharing with images
+- **Twitter Cards**: Optimized Twitter previews
+- **Robots**: Index/follow directives
+
+### Structured Data (JSON-LD)
+
+**Homepage**: ProfessionalService schema with:
+- Business information
+- Services offered
+- Contact details
+- Provider credentials
+- Opening hours
+
+**Blog Posts**: BlogPosting schema with:
+- Article metadata
+- Author information
+- Publication dates
+- Keywords/tags
+
+**Blog Index**: Blog schema with all posts listed
+
+### Sitemap & Robots
+
+- **Sitemap**: Auto-generated at `/sitemap-index.xml`
+- **Robots.txt**: Located in `/public/robots.txt`
+- **Site URL**: Configured in `astro.config.mjs`
+
+### Adding SEO to New Pages
+
+```astro
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout 
+  title="Page Title"
+  description="Page description for SEO"
+  keywords={['keyword1', 'keyword2']}
+  image="/page-image.jpg"
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+  </Fragment>
+  
+  <!-- Page content -->
+</Layout>
 ```
 
 ## Cloudflare Integration
