@@ -67,6 +67,9 @@ npm run astro -- info    # Show environment info
 ├── src/
 │   ├── env.d.ts              # TypeScript environment declarations
 │   ├── pages/                # File-based routing (*.astro, *.md)
+│   ├── content/              # Content collections
+│   │   ├── config.ts         # Collection schemas
+│   │   └── blog/             # Blog posts (markdown)
 │   ├── components/           # Reusable components
 │   │   ├── shared/           # Cross-page components
 │   │   │   ├── ui/           # Common UI components (Button, Input, Textarea, etc.)
@@ -74,7 +77,7 @@ npm run astro -- info    # Show environment info
 │   │   │   ├── Footer.astro
 │   │   │   └── ConstellationBg.astro
 │   │   ├── home/             # Home page specific sections
-│   │   └── blog/             # Blog specific components
+│   │   └── blog/             # Blog specific components (BlogLayout.astro, BlogCard.astro)
 │   ├── layouts/              # Page layouts (Layout.astro)
 │   └── styles/               # Global styles (global.css with Tailwind v4 theme)
 ├── astro.config.mjs          # Astro configuration
@@ -182,6 +185,39 @@ const { title, description } = Astro.props;
 </form>
 ```
 
+### Blog Content
+
+For blog posts and long-form content, use the **BlogLayout** component to wrap markdown or HTML content:
+
+```astro
+---
+import Layout from '../../layouts/Layout.astro';
+import BlogLayout from '../../components/blog/BlogLayout.astro';
+---
+
+<Layout title="Blog Post Title">
+	<article class="max-w-4xl mx-auto px-4 py-16">
+		<BlogLayout>
+			<h1>Your Blog Title</h1>
+			<p>Blog content with automatic prose styling...</p>
+			<h2>Subheadings</h2>
+			<ul>
+				<li>Styled lists</li>
+				<li>Links, images, blockquotes</li>
+			</ul>
+		</BlogLayout>
+	</article>
+</Layout>
+```
+
+**BlogLayout features:**
+- Tailwind Typography plugin with custom theme colors
+- Serif headings (Libre Baskerville) with proper hierarchy
+- Orange links that match the primary color
+- Justified paragraphs with Lato font
+- Styled code blocks, blockquotes, lists, and images
+- Responsive and accessible markup
+
 ### Formatting
 
 - **Indentation**: Tabs
@@ -212,6 +248,69 @@ try {
   console.error('Failed to fetch data:', error);
   return new Response('Internal Server Error', { status: 500 });
 }
+```
+
+## Content Collections
+
+Blog posts use Astro Content Collections for type-safe content management. All blog posts are stored in `src/content/blog/` as markdown files.
+
+### Blog Post Frontmatter Schema
+
+```yaml
+---
+title: "Post Title"
+description: "Brief description for SEO"
+author: "Mariya Samreen"
+pubDate: 2026-02-05
+updatedDate: 2026-02-10  # Optional
+image:                    # Optional
+  url: "https://..."
+  alt: "Image description"
+tags: ["tag1", "tag2"]
+draft: false              # Set to true to hide from production
+---
+```
+
+### Creating a New Blog Post
+
+Blog posts can be created as standalone markdown files or as folders with assets:
+
+**Option 1: Simple post (no images)**
+```bash
+src/content/blog/my-post.md
+```
+
+**Option 2: Post with images/assets** (Recommended)
+```bash
+src/content/blog/my-post/
+├── index.md
+└── image.jpg
+```
+
+Steps:
+1. Create a folder in `src/content/blog/` (e.g., `my-post/`)
+2. Add `index.md` with frontmatter and content
+3. Place images in the same folder
+4. Reference images with relative paths: `./image.jpg`
+5. The post will automatically appear on `/blog` and generate `/blog/my-post`
+
+### Querying Blog Posts
+
+```typescript
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+// Get all published posts
+const posts = await getCollection('blog', (entry) => {
+  return entry.data.draft !== true;
+});
+
+// Sort by date (newest first)
+const sortedPosts = posts.sort((a, b) => 
+  b.data.pubDate.getTime() - a.data.pubDate.getTime()
+);
+
+// Render post content
+const { Content } = await post.render();
 ```
 
 ## Cloudflare Integration

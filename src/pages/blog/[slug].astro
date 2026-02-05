@@ -1,0 +1,141 @@
+---
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import BlogLayout from '../../components/blog/BlogLayout.astro';
+import Button from '../../components/shared/ui/Button.astro';
+
+export async function getStaticPaths() {
+	const blogPosts = await getCollection('blog');
+	return blogPosts.map((post) => ({
+		params: { slug: post.slug },
+		props: { post },
+	}));
+}
+
+interface Props {
+	post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+const formattedDate = post.data.pubDate.toLocaleDateString('en-US', {
+	year: 'numeric',
+	month: 'long',
+	day: 'numeric',
+});
+
+const formattedUpdatedDate = post.data.updatedDate?.toLocaleDateString('en-US', {
+	year: 'numeric',
+	month: 'long',
+	day: 'numeric',
+});
+---
+
+<Layout title={post.data.title} description={post.data.description}>
+	<article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+		<!-- Article Header -->
+		<header class="mb-12">
+			<!-- Tags first (small and subtle) -->
+			{post.data.tags.length > 0 && (
+				<div class="flex flex-wrap gap-2 mb-6">
+					{post.data.tags.map((tag) => (
+						<span class="px-2.5 py-1 text-xs uppercase tracking-wider font-medium text-primary/80 bg-primary/5 border border-primary/20 rounded">
+							{tag.replace(/-/g, ' ')}
+						</span>
+					))}
+				</div>
+			)}
+			
+			<!-- Title (hero) -->
+			<h1 class="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-ivory leading-[1.1] mb-6">
+				{post.data.title}
+			</h1>
+			
+			<!-- Description -->
+			<p class="text-charcoal text-lg sm:text-xl leading-relaxed mb-8">
+				{post.data.description}
+			</p>
+			
+			<!-- Author & Date (clean and minimal) -->
+			<div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 pt-6 border-t border-night-lighter">
+				<div class="flex items-center gap-3">
+					<div class="w-10 h-10 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center">
+						<span class="text-primary font-semibold text-sm">MS</span>
+					</div>
+					<div>
+						<p class="text-ivory text-sm font-medium">{post.data.author}</p>
+						<p class="text-charcoal-light text-xs">Psychological Counsellor</p>
+					</div>
+				</div>
+				<div class="flex items-center gap-4 text-sm text-charcoal-light sm:ml-auto">
+					<time datetime={post.data.pubDate.toISOString()} class="flex items-center gap-1.5">
+						<svg class="w-4 h-4 text-primary/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+						</svg>
+						<span>{formattedDate}</span>
+					</time>
+					{formattedUpdatedDate && (
+						<span class="text-xs text-charcoal-dark" title={`Updated on ${formattedUpdatedDate}`}>
+							Updated
+						</span>
+					)}
+				</div>
+			</div>
+		</header>
+
+		<!-- Featured Image -->
+		{post.data.image && (
+			<div class="mb-12 rounded-xl overflow-hidden shadow-2xl">
+				<img
+					src={typeof post.data.image.url === 'string' ? post.data.image.url : post.data.image.url.src}
+					alt={post.data.image.alt}
+					class="w-full h-auto"
+					loading="eager"
+				/>
+			</div>
+		)}
+
+		<!-- Article Content -->
+		<BlogLayout>
+			<Content />
+		</BlogLayout>
+
+		<!-- Article Footer -->
+		<footer class="mt-16 pt-8 border-t border-night-lighter">
+			<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+				<!-- Author Card -->
+				<div class="flex items-center gap-4">
+					<div class="w-12 h-12 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center flex-shrink-0">
+						<span class="text-primary font-semibold">MS</span>
+					</div>
+					<div>
+						<p class="text-ivory font-medium">{post.data.author}</p>
+						<p class="text-charcoal-light text-sm">Psychological Counsellor</p>
+					</div>
+				</div>
+				
+				<!-- Back Button -->
+				<Button href="/blog" variant="outline" size="md">
+					← Back to Blog
+				</Button>
+			</div>
+		</footer>
+
+		<!-- CTA Section -->
+		<div class="mt-12 p-8 sm:p-10 bg-night-light border border-night-lighter rounded-xl text-center">
+			<span class="text-3xl text-primary mb-4 block">✦</span>
+			<h3 class="font-serif text-2xl sm:text-3xl text-ivory mb-3">
+				Start Your Healing Journey
+			</h3>
+			<p class="text-charcoal-light text-sm sm:text-base mb-8 max-w-xl mx-auto leading-relaxed">
+				If this resonates with you and you're ready to explore therapy, 
+				I'd be honored to support you on your path to wellness.
+			</p>
+			<Button href="/#contact" variant="primary" size="lg">
+				Book a Consultation
+			</Button>
+		</div>
+	</article>
+</Layout>
