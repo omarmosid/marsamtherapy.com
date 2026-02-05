@@ -58,8 +58,8 @@ const lines = [
 >
 	<defs>
 		<radialGradient id="starGlow" cx="50%" cy="50%" r="50%">
-			<stop offset="0%" stop-color="#d4699a" stop-opacity="1" />
-			<stop offset="100%" stop-color="#b8567f" stop-opacity="0" />
+			<stop offset="0%" stop-color="#f97316" stop-opacity="1" />
+			<stop offset="100%" stop-color="#ea580c" stop-opacity="0" />
 		</radialGradient>
 	</defs>
 	
@@ -70,9 +70,9 @@ const lines = [
 			y1={`${line.y1}%`}
 			x2={`${line.x2}%`}
 			y2={`${line.y2}%`}
-			stroke="#d4699a"
+			stroke="#f97316"
 			stroke-width="0.15"
-			stroke-opacity="0.4"
+			stroke-opacity="0.3"
 		/>
 	))}
 	
@@ -82,7 +82,7 @@ const lines = [
 			cx={`${star.x}%`}
 			cy={`${star.y}%`}
 			r={star.size}
-			fill={star.bright ? '#d4699a' : '#9d8cb5'}
+			fill={star.bright ? '#f97316' : '#fb923c'}
 			opacity={star.bright ? 0.8 : 0.5}
 		>
 			{star.bright && (

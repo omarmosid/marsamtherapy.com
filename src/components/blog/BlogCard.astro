@@ -11,7 +11,7 @@ interface Props {
 const { title, excerpt, date, category, slug, image } = Astro.props;
 ---
 
-<article class="group bg-night-light border border-night-lighter rounded-2xl overflow-hidden hover:shadow-lg hover:shadow-starlight/10 transition-all duration-300">
+<article class="group bg-night-light border border-night-lighter rounded-lg overflow-hidden hover:shadow-lg hover:shadow-primary/10 transition-all duration-300">
 	<!-- Image -->
 	<div class="aspect-[16/9] bg-night overflow-hidden">
 		{image ? (
@@ -22,7 +22,7 @@ const { title, excerpt, date, category, slug, image } = Astro.props;
 			/>
 		) : (
 			<div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-night/5 to-violet/10 group-hover:scale-105 transition-transform duration-500">
-				<span class="text-4xl text-starlight/50">✦</span>
+				<span class="text-4xl text-primary/50">✦</span>
 			</div>
 		)}
 	</div>
@@ -30,14 +30,14 @@ const { title, excerpt, date, category, slug, image } = Astro.props;
 	<div class="p-6">
 		<!-- Category & Date -->
 		<div class="flex items-center gap-3 mb-3">
-			<span class="px-3 py-1 bg-starlight/20 text-starlight text-xs font-medium rounded-full">
+			<span class="px-3 py-1 bg-primary/20 text-primary text-xs font-medium rounded-md">
 				{category}
 			</span>
 			<span class="text-charcoal-dark text-sm">{date}</span>
 		</div>
 		
 		<!-- Title -->
-		<h3 class="font-serif text-xl text-ivory mb-2 group-hover:text-starlight transition-colors">
+		<h3 class="font-serif text-xl text-ivory mb-2 group-hover:text-primary transition-colors">
 			<a href={`/blog/${slug}`} class="hover:underline">
 				{title}
 			</a>
@@ -51,7 +51,7 @@ const { title, excerpt, date, category, slug, image } = Astro.props;
 		<!-- Read More -->
 		<a 
 			href={`/blog/${slug}`} 
-			class="inline-flex items-center gap-2 text-starlight font-medium text-sm hover:text-starlight-bright transition-colors"
+			class="inline-flex items-center gap-2 text-primary font-medium text-sm hover:text-primary-bright transition-colors"
 		>
 			Read More
 			<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

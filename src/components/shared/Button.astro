@@ -13,12 +13,12 @@ const {
 	class: className = '' 
 } = Astro.props;
 
-const baseStyles = 'inline-flex items-center justify-center font-medium transition-all duration-300 rounded-full';
+const baseStyles = 'inline-flex items-center justify-center font-medium transition-all duration-300 rounded-md';
 
 const variants = {
-	primary: 'bg-starlight text-night hover:bg-starlight-bright shadow-md hover:shadow-lg hover:shadow-starlight/20',
-	secondary: 'bg-violet text-ivory hover:bg-violet-light shadow-md hover:shadow-lg hover:shadow-violet/20',
-	outline: 'border-2 border-starlight text-starlight hover:bg-starlight/10',
+	primary: 'bg-primary text-white hover:bg-primary-light shadow-md hover:shadow-lg hover:shadow-primary/30',
+	secondary: 'bg-night-lighter text-charcoal hover:bg-night-lightest shadow-md hover:shadow-lg',
+	outline: 'border-2 border-primary text-primary hover:bg-primary/10',
 };
 
 const sizes = {

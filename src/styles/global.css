@@ -3,26 +3,25 @@
 /* Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
 
-/* Custom Theme - Dark Mode */
+/* Custom Theme - Dark Green with Orange Accent */
 @theme {
-	/* Colors */
-	--color-night: #0f1419;
-	--color-night-light: #1a1f2e;
-	--color-night-lighter: #2d3748;
-	--color-starlight: #e8a5c8;
-	--color-starlight-dim: #d88fb5;
-	--color-starlight-bright: #f4c5e0;
-	--color-violet: #a89bd9;
-	--color-violet-light: #c5b9e0;
-	--color-violet-dim: #8d7ec4;
+	/* Dark Green Backgrounds */
+	--color-night: #0a1810;
+	--color-night-light: #0f2318;
+	--color-night-lighter: #1a2f24;
+	--color-night-lightest: #234030;
+	
+	/* Primary - Orange Accent */
+	--color-primary: #f97316;
+	--color-primary-light: #fb923c;
+	--color-primary-dark: #ea580c;
+	
+	/* Neutrals */
 	--color-ivory: #f5f3f0;
 	--color-cream: #e8e4df;
 	--color-charcoal: #e5e5e5;
 	--color-charcoal-light: #b0b0b8;
 	--color-charcoal-dark: #808088;
-	--color-accent-peach: #f4a598;
-	--color-accent-mint: #98d4a8;
-	--color-accent-lavender: #c8b8e8;
 
 	/* Fonts */
 	--font-serif: 'Playfair Display', Georgia, serif;
@@ -45,4 +44,13 @@ h1, h2, h3, h4, h5, h6 {
 	font-family: var(--font-serif);
 	line-height: 1.3;
 	color: var(--color-ivory);
+}
+
+/* Utility gradient classes */
+.gradient-green-dark {
+	background: linear-gradient(135deg, var(--color-night-light) 0%, var(--color-night-lighter) 100%);
+}
+
+.gradient-green-orange {
+	background: linear-gradient(135deg, var(--color-night) 0%, var(--color-primary-dark) 100%);
 }
