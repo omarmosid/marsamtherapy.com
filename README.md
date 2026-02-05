@@ -1,43 +1,96 @@
-# Astro Starter Kit: Minimal
+# Marsam Therapy Website
 
-```sh
-npm create astro@latest -- --template minimal
+![Marsam Therapy](./public/github.jpg)
+
+A therapy practice website for Mariya Samreen, offering faith-informed psychological counseling with Islamic principles.
+
+## How to Run Locally
+
+### Prerequisites
+
+Before you start, you need to have these installed on your computer:
+
+1. **Node.js** (version 18 or higher)
+   - Download from: https://nodejs.org
+   - Choose the "LTS" (Long Term Support) version
+   - Follow the installer instructions
+
+2. **Git** (optional, for downloading the code)
+   - Download from: https://git-scm.com
+   - Or download the project as a ZIP file instead
+
+### Step-by-Step Instructions
+
+1. **Get the code**
+   
+   If you have Git:
+   ```bash
+   git clone [repository-url]
+   cd marsam-therapy-website
+   ```
+   
+   Or download the ZIP file and extract it to a folder.
+
+2. **Open Terminal/Command Prompt**
+   
+   - **Windows**: Press `Win + R`, type `cmd`, press Enter
+   - **Mac**: Press `Cmd + Space`, type "Terminal", press Enter
+   - Navigate to the project folder using `cd` command
+
+3. **Install dependencies** (first time only)
+   ```bash
+   npm install
+   ```
+   This downloads all the necessary files the website needs to run.
+
+4. **Start the website**
+   ```bash
+   npm run dev
+   ```
+   Wait a few seconds until you see a message like "Local: http://localhost:4321"
+
+5. **View the website**
+   
+   Open your web browser and go to: **http://localhost:4321**
+   
+   The website is now running on your computer!
+
+6. **Stop the website**
+   
+   Press `Ctrl + C` in the terminal window (works on both Windows and Mac)
+
+## Making Changes
+
+- Edit files in the `src/` folder
+- The website will automatically reload when you save changes
+- Blog posts are in `src/content/blog/` as `.md` (Markdown) files
+- Pages are in `src/pages/`
+
+### Writing Blog Posts
+
+Blog posts are written in **Markdown** (`.md` files) - a simple way to write formatted text using plain text.
+
+**Basic Markdown syntax:**
+- `# Heading` - Creates a heading (use ##, ###, etc. for smaller headings)
+- `**bold text**` - Makes text bold
+- `*italic text*` - Makes text italic
+- `[link text](url)` - Creates a link
+- `![alt text](image.jpg)` - Adds an image
+
+Each blog post needs information at the top (called "frontmatter"):
+```markdown
+---
+title: "Your Post Title"
+description: "Brief description"
+author: "Mariya Samreen"
+pubDate: 2024-02-05
+tags: ["tag1", "tag2"]
+---
+
+Your post content here...
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Need Help?
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- See `AGENTS.md` for detailed development guidelines
+- Check `src/components/*/README.md` for component documentation
