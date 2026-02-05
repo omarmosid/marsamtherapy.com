@@ -1,0 +1,14 @@
+---
+interface Props {
+	title: string;
+	description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<div class="group bg-night border border-night-lighter rounded-2xl p-6 hover:shadow-lg hover:shadow-starlight/10 hover:border-starlight/30 transition-all duration-300">
+	<slot name="icon" />
+	<h3 class="font-serif text-xl text-ivory mb-2 group-hover:text-starlight transition-colors">{title}</h3>
+	<p class="text-charcoal-light text-sm leading-relaxed">{description}</p>
+</div>

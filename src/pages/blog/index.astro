@@ -1,0 +1,120 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import BlogCard from '../../components/blog/BlogCard.astro';
+import ConstellationBg from '../../components/shared/ConstellationBg.astro';
+
+const posts = [
+	{
+		title: 'Understanding Anxiety: A Faith-Based Perspective',
+		excerpt: 'Exploring how Islamic principles can complement modern psychological approaches to managing anxiety and finding inner peace.',
+		date: 'Jan 15, 2026',
+		category: 'Anxiety',
+		slug: 'understanding-anxiety-faith-based-perspective',
+		image: 'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=600&q=80&auto=format&fit=crop',
+	},
+	{
+		title: '5 Daily Practices for Better Mental Health',
+		excerpt: 'Simple, practical habits rooted in both psychology and spirituality that can transform your daily wellbeing.',
+		date: 'Jan 8, 2026',
+		category: 'Wellness',
+		slug: 'daily-practices-mental-health',
+		image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600&q=80&auto=format&fit=crop',
+	},
+	{
+		title: 'Navigating Life Transitions with Grace',
+		excerpt: 'Change is inevitable. Here\'s how to embrace transitions—whether career shifts, relationships, or personal growth—with resilience.',
+		date: 'Dec 28, 2025',
+		category: 'Life Transitions',
+		slug: 'navigating-life-transitions',
+		image: 'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80&auto=format&fit=crop',
+	},
+	{
+		title: 'The Power of Self-Compassion in Healing',
+		excerpt: 'Why being kind to yourself isn\'t selfish—it\'s essential. Learn how self-compassion accelerates your healing journey.',
+		date: 'Dec 15, 2025',
+		category: 'Self-Care',
+		slug: 'power-of-self-compassion',
+		image: 'https://images.unsplash.com/photo-1544027993-37dbfe43562a?w=600&q=80&auto=format&fit=crop',
+	},
+	{
+		title: 'Setting Healthy Boundaries: A Guide',
+		excerpt: 'Boundaries protect your energy and relationships. Discover how to set them with confidence and maintain them with grace.',
+		date: 'Dec 5, 2025',
+		category: 'Relationships',
+		slug: 'setting-healthy-boundaries',
+		image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&q=80&auto=format&fit=crop',
+	},
+	{
+		title: 'Mindfulness and Prayer: Finding Stillness',
+		excerpt: 'How the practice of mindfulness intersects with spiritual devotion to create profound moments of peace and clarity.',
+		date: 'Nov 20, 2025',
+		category: 'Spirituality',
+		slug: 'mindfulness-and-prayer',
+		image: 'https://images.unsplash.com/photo-1508672019048-805c876b67e2?w=600&q=80&auto=format&fit=crop',
+	},
+];
+---
+
+<Layout title="Blog" description="Insights on mental health, faith-informed healing, and personal growth from Mariya Samreen.">
+	<!-- Hero Section -->
+	<section class="relative py-20 sm:py-28 bg-gradient-to-br from-night-light via-violet-dim/10 to-night overflow-hidden">
+		<ConstellationBg opacity={0.3} />
+		<div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+			<p class="text-starlight font-semibold tracking-wider mb-3 text-sm">INSIGHTS & REFLECTIONS</p>
+			<h1 class="font-serif text-4xl sm:text-5xl text-ivory mb-4">
+				Blog
+			</h1>
+			<p class="text-charcoal-light max-w-2xl mx-auto">
+				Thoughts on mental health, faith-informed healing, and the journey to inner peace. 
+				May these words bring light to your path.
+			</p>
+		</div>
+	</section>
+
+	<!-- Blog Posts Grid -->
+	<section class="py-16 sm:py-24 bg-night">
+		<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+			<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+				{posts.map((post) => (
+					<BlogCard {...post} />
+				))}
+			</div>
+			
+			<!-- Load More (Placeholder) -->
+			<div class="text-center mt-12">
+				<button 
+					class="px-8 py-3 border-2 border-starlight text-starlight font-medium rounded-full hover:bg-starlight hover:text-night transition-colors duration-300"
+					disabled
+				>
+					More Posts Coming Soon
+				</button>
+			</div>
+		</div>
+	</section>
+
+	<!-- Newsletter CTA -->
+	<section class="py-16 sm:py-20 bg-night-light">
+		<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+			<span class="text-4xl mb-4 block text-starlight">✦</span>
+			<h2 class="font-serif text-2xl sm:text-3xl text-ivory mb-4">
+				Stay Connected
+			</h2>
+			<p class="text-charcoal-light mb-8">
+				Subscribe to receive thoughtful insights on mental health and wellbeing directly in your inbox.
+			</p>
+			<form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+				<input
+					type="email"
+					placeholder="Your email address"
+					class="flex-1 px-4 py-3 rounded-full border border-night-lighter bg-night text-charcoal placeholder:text-charcoal-dark focus:border-starlight focus:ring-2 focus:ring-starlight/20 outline-none transition-all"
+				/>
+				<button
+					type="submit"
+					class="px-6 py-3 bg-starlight text-night font-medium rounded-full hover:bg-starlight-bright shadow-md hover:shadow-lg transition-all"
+				>
+					Subscribe
+				</button>
+			</form>
+		</div>
+	</section>
+</Layout>

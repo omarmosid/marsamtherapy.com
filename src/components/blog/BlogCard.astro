@@ -1,0 +1,62 @@
+---
+interface Props {
+	title: string;
+	excerpt: string;
+	date: string;
+	category: string;
+	slug: string;
+	image?: string;
+}
+
+const { title, excerpt, date, category, slug, image } = Astro.props;
+---
+
+<article class="group bg-night-light border border-night-lighter rounded-2xl overflow-hidden hover:shadow-lg hover:shadow-starlight/10 transition-all duration-300">
+	<!-- Image -->
+	<div class="aspect-[16/9] bg-night overflow-hidden">
+		{image ? (
+			<img 
+				src={image}
+				alt={title}
+				class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+			/>
+		) : (
+			<div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-night/5 to-violet/10 group-hover:scale-105 transition-transform duration-500">
+				<span class="text-4xl text-starlight/50">✦</span>
+			</div>
+		)}
+	</div>
+	
+	<div class="p-6">
+		<!-- Category & Date -->
+		<div class="flex items-center gap-3 mb-3">
+			<span class="px-3 py-1 bg-starlight/20 text-starlight text-xs font-medium rounded-full">
+				{category}
+			</span>
+			<span class="text-charcoal-dark text-sm">{date}</span>
+		</div>
+		
+		<!-- Title -->
+		<h3 class="font-serif text-xl text-ivory mb-2 group-hover:text-starlight transition-colors">
+			<a href={`/blog/${slug}`} class="hover:underline">
+				{title}
+			</a>
+		</h3>
+		
+		<!-- Excerpt -->
+		<p class="text-charcoal-light text-sm leading-relaxed mb-4">
+			{excerpt}
+		</p>
+		
+		<!-- Read More -->
+		<a 
+			href={`/blog/${slug}`} 
+			class="inline-flex items-center gap-2 text-starlight font-medium text-sm hover:text-starlight-bright transition-colors"
+		>
+			Read More
+			<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+			</svg>
+		</a>
+	</div>
+</article>

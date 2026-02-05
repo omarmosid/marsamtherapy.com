@@ -1,0 +1,47 @@
+---
+import Button from "../shared/Button.astro";
+import ConstellationBg from "../shared/ConstellationBg.astro";
+---
+
+<section
+  class="relative min-h-[90vh] flex items-center overflow-hidden bg-gradient-to-br from-night-light via-night-lighter to-violet-dim/20"
+>
+  <!-- Background Image -->
+  <div class="absolute inset-0 opacity-20">
+    <img
+      src="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=1920&q=80&auto=format&fit=crop"
+      alt=""
+      class="w-full h-full object-cover"
+    />
+  </div>
+  <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <div class="max-w-3xl">
+      <p
+        class="text-starlight font-semibold tracking-wider mb-4 text-sm sm:text-base"
+      >
+        PSYCHOLOGICAL COUNSELLING
+      </p>
+      <h1
+        class="font-serif text-4xl sm:text-5xl lg:text-6xl text-ivory leading-tight mb-6"
+      >
+        Know it.<br />
+        Feel it.<br />
+        <span class="text-starlight font-bold">Believe it.</span>
+      </h1>
+      <p
+        class="text-charcoal-light text-lg sm:text-xl mb-8 leading-relaxed max-w-xl"
+      >
+        Faith-informed psychological counselling to help you find your inner
+        light. A safe space for healing, growth, and self-discovery.
+      </p>
+      <div class="flex flex-wrap gap-4">
+        <Button href="#contact" variant="primary" size="lg">
+          Book a Consultation
+        </Button>
+        <Button href="#about" variant="secondary" size="lg">
+          Learn More
+        </Button>
+      </div>
+    </div>
+  </div>
+</section>
