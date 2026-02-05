@@ -3,6 +3,7 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import BlogCard from '../../components/blog/BlogCard.astro';
 import ConstellationBg from '../../components/shared/ConstellationBg.astro';
+import { getRelativeTime } from '../../utils/date';
 
 // Get all blog posts, filter out drafts, and sort by date (newest first)
 const allPosts = await getCollection('blog', (entry) => {
@@ -16,12 +17,8 @@ const posts = allPosts
 	.map((post) => ({
 		title: post.data.title,
 		excerpt: post.data.description,
-		date: post.data.pubDate.toLocaleDateString('en-US', { 
-			year: 'numeric', 
-			month: 'short', 
-			day: 'numeric' 
-		}),
-		category: post.data.tags[0] || 'Article',
+		date: getRelativeTime(post.data.pubDate),
+		category: post.data.tags[0]?.replace(/-/g, ' ') || 'Article',
 		slug: post.slug,
 		image: post.data.image 
 			? (typeof post.data.image.url === 'string' ? post.data.image.url : post.data.image.url.src)
