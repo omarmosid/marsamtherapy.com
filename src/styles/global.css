@@ -1,7 +1,11 @@
 @import "tailwindcss";
 
 /* Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+@import '@fontsource/libre-baskerville/400.css';
+@import '@fontsource/libre-baskerville/700.css';
+@import '@fontsource/lato/300.css';
+@import '@fontsource/lato/400.css';
+@import '@fontsource/lato/700.css';
 
 /* Custom Theme - Dark Green with Orange Accent */
 @theme {
@@ -24,8 +28,8 @@
 	--color-charcoal-dark: #808088;
 
 	/* Fonts */
-	--font-serif: 'Playfair Display', Georgia, serif;
-	--font-sans: 'Inter', system-ui, sans-serif;
+	--font-serif: 'Libre Baskerville', Georgia, serif;
+	--font-sans: 'Lato', system-ui, -apple-system, sans-serif;
 }
 
 /* Base Styles */

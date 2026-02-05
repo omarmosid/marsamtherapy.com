@@ -4,19 +4,22 @@ This document provides guidelines for AI coding agents working in this repositor
 
 ## Project Overview
 
-**Marsam Therapy** (marsamtherapy.com) - A therapy practice website for Mariya Samreen, a licensed therapist.
+**Marsam Therapy** (marsamtherapy.com) - A therapy practice website for Mariya Samreen, a licensed therapist offering faith-informed therapy with Islamic principles.
 
 ### Website Content
-- **Therapist**: Mariya Samreen - Licensed therapist with 4+ years experience
+- **Therapist**: Mariya Samreen - Psychological Counsellor with 4+ years experience
 - **Services**: Conflict Management, Trauma Counselling, Psychoeducation, Individual Therapy, Life Skills Training
 - **Scope**: Anxiety, Stress Management, Anger Management, Life Transitions, Abandonment, Behavioural/Emotional Problems
 - **Clients**: Adults, Elderly, Individuals, Groups, Communities
 - **Languages**: English, Hindi/Urdu
-- **Fees**: Sliding scale with online consultations available
-- **Sections**: About, Services, Contact Form
+- **Theme**: Celestial "brightness in darkness" with tagline "Know it. Feel it. Believe it."
+- **Design**: Dark green (#0a1810-#234030) with orange accent (#f97316)
 
 ### Tech Stack
 - **Framework**: Astro 5.x (static site generator)
+- **Styling**: Tailwind CSS v4 with custom theme
+- **Fonts**: Libre Baskerville (serif, self-hosted via @fontsource), system fonts (sans-serif)
+- **Icons**: Heroicons v2
 - **Language**: TypeScript (strict mode)
 - **Deployment**: Cloudflare Workers/Pages
 - **Package Manager**: npm
@@ -64,9 +67,12 @@ npm run astro -- info    # Show environment info
 ├── src/
 │   ├── env.d.ts              # TypeScript environment declarations
 │   ├── pages/                # File-based routing (*.astro, *.md)
-│   ├── components/           # Reusable components (create as needed)
-│   ├── layouts/              # Page layouts (create as needed)
-│   └── styles/               # Global styles (create as needed)
+│   ├── components/           # Reusable components
+│   │   ├── shared/           # Cross-page components (Header, Footer, Button, etc.)
+│   │   ├── home/             # Home page specific sections
+│   │   └── blog/             # Blog specific components
+│   ├── layouts/              # Page layouts (Layout.astro)
+│   └── styles/               # Global styles (global.css with Tailwind v4 theme)
 ├── astro.config.mjs          # Astro configuration
 ├── tsconfig.json             # TypeScript config (extends astro/tsconfigs/strict)
 ├── wrangler.jsonc            # Cloudflare Workers configuration
@@ -112,23 +118,26 @@ import { myLocalUtil } from './utils/helpers';
 
 ### Astro Components
 
+- Use Tailwind CSS classes, avoid `<style>` blocks unless absolutely necessary
+- Props interface always at the top of frontmatter
+- Use destructuring for props
+- Use `slot` for flexible content injection (e.g., icons, custom content)
+
 ```astro
 ---
-import Layout from '../layouts/Layout.astro';
-
 interface Props {
-  title: string;
+	title: string;
+	description: string;
 }
-const { title } = Astro.props;
+
+const { title, description } = Astro.props;
 ---
 
-<Layout title={title}>
-  <main><h1>{title}</h1></main>
-</Layout>
-
-<style>
-  main { margin: 0 auto; max-width: 1200px; }
-</style>
+<div class="bg-night-light border border-night-lighter rounded-lg p-6">
+	<slot name="icon" />
+	<h3 class="font-serif text-xl text-ivory mb-2">{title}</h3>
+	<p class="text-charcoal-light">{description}</p>
+</div>
 ```
 
 ### Formatting
