@@ -17,6 +17,25 @@ const blogCollection = defineCollection({
 	}),
 });
 
+const servicesCollection = defineCollection({
+	type: 'content',
+	schema: ({ image }) => z.object({
+		title: z.string(),
+		description: z.string(),
+		icon: z.string(),
+		image: z.object({
+			url: z.union([image(), z.string()]),
+			alt: z.string(),
+		}).optional(),
+		benefits: z.array(z.string()),
+		approach: z.string(),
+		duration: z.string().optional(),
+		format: z.array(z.string()).default(['Individual', 'Online']),
+		order: z.number().default(0),
+	}),
+});
+
 export const collections = {
 	blog: blogCollection,
+	services: servicesCollection,
 };

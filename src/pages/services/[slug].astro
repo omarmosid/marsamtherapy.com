@@ -1,0 +1,193 @@
+---
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import BlogLayout from '../../components/blog/BlogLayout.astro';
+import Button from '../../components/shared/ui/Button.astro';
+
+export async function getStaticPaths() {
+	const services = await getCollection('services');
+	return services.map((service) => ({
+		params: { slug: service.slug },
+		props: { service },
+	}));
+}
+
+interface Props {
+	service: CollectionEntry<'services'>;
+}
+
+const { service } = Astro.props;
+const { Content } = await service.render();
+
+// Structured data for service
+const structuredData = {
+	"@context": "https://schema.org",
+	"@type": "Service",
+	"name": service.data.title,
+	"description": service.data.description,
+	"provider": {
+		"@type": "Person",
+		"name": "Mariya Samreen",
+		"jobTitle": "Psychological Counsellor"
+	},
+	"areaServed": {
+		"@type": "Place",
+		"name": "Online & In-Person"
+	},
+	"offers": {
+		"@type": "Offer",
+		"availability": "https://schema.org/InStock"
+	}
+};
+---
+
+<Layout 
+	title={service.data.title}
+	description={service.data.description}
+	keywords={[service.data.title.toLowerCase(), 'therapy', 'counselling', 'mental health', 'Mariya Samreen']}
+>
+	<Fragment slot="head">
+		<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+	</Fragment>
+
+	<article class="min-h-screen bg-night">
+		<!-- Hero Section -->
+		<section class="relative py-12 sm:py-16 bg-gradient-to-br from-night via-night-light to-night-lighter overflow-hidden">
+			<!-- Decorative Elements -->
+			<div class="absolute top-20 right-20 text-primary text-3xl opacity-10">✦</div>
+			<div class="absolute bottom-20 left-20 text-primary text-2xl opacity-8">✦</div>
+			
+			<div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+				<!-- Back Link -->
+				<a 
+					href="/#services" 
+					class="inline-flex items-center gap-2 text-charcoal-light hover:text-primary transition-colors mb-8 text-sm group"
+				>
+					<svg class="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+					</svg>
+					Back to Services
+				</a>
+
+				<div class="grid lg:grid-cols-5 gap-12 items-center">
+					<!-- Left: Content -->
+					<div class="lg:col-span-3">
+						<!-- Icon -->
+						<div class="mb-6">
+							<div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/40 flex items-center justify-center shadow-lg shadow-primary/10">
+								<svg class="w-10 h-10 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d={service.data.icon} />
+								</svg>
+							</div>
+						</div>
+
+						<!-- Title & Description -->
+						<h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl text-ivory leading-[1.1] mb-6">
+							{service.data.title}
+						</h1>
+						
+						<p class="text-charcoal text-lg sm:text-xl leading-relaxed mb-8">
+							{service.data.description}
+						</p>
+
+						<!-- Meta Info -->
+						<div class="flex flex-wrap items-center gap-4 mb-8">
+							{service.data.duration && (
+								<div class="flex items-center gap-2 px-4 py-2 bg-night/50 border border-night-lighter rounded-lg">
+									<svg class="w-5 h-5 text-primary/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+									</svg>
+									<span class="text-sm text-charcoal-light">{service.data.duration}</span>
+								</div>
+							)}
+							{service.data.format.map((f) => (
+								<span class="px-3 py-1.5 bg-primary/10 text-primary text-xs font-semibold uppercase tracking-wider rounded-lg border border-primary/30">
+									{f}
+								</span>
+							))}
+						</div>
+
+						<!-- CTA -->
+						<Button href="/#contact" variant="primary" size="lg">
+							Book a Consultation
+						</Button>
+					</div>
+
+					<!-- Right: Approach Card -->
+					<div class="lg:col-span-2">
+						<div class="relative bg-gradient-to-br from-night-light to-night border border-primary/20 rounded-2xl p-8 shadow-xl">
+							<div class="absolute -top-3 -right-3 text-primary text-4xl opacity-20">✦</div>
+							<h3 class="font-serif text-2xl text-ivory mb-4 flex items-center gap-2">
+								<span class="text-primary">✦</span>
+								My Approach
+							</h3>
+							<p class="text-charcoal-light leading-relaxed">
+								{service.data.approach}
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Benefits Section -->
+		<section class="py-16 sm:py-20 border-b border-night-lighter">
+			<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+				<div class="text-center mb-12">
+					<h2 class="font-serif text-3xl sm:text-4xl text-ivory mb-4">
+						What You'll Gain
+					</h2>
+					<p class="text-charcoal-light max-w-2xl mx-auto">
+						These are the key benefits you can expect from {service.data.title.toLowerCase()}
+					</p>
+				</div>
+
+				<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+					{service.data.benefits.map((benefit) => (
+						<div class="flex items-start gap-4 p-6 bg-gradient-to-br from-night-light to-night border border-night-lighter rounded-xl hover:border-primary/30 transition-colors">
+							<div class="flex-shrink-0">
+								<div class="w-8 h-8 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center">
+									<svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+									</svg>
+								</div>
+							</div>
+							<p class="text-charcoal text-sm leading-relaxed flex-1">{benefit}</p>
+						</div>
+					))}
+				</div>
+			</div>
+		</section>
+
+		<!-- Detailed Content Section -->
+		<section class="py-16 sm:py-20">
+			<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+				<BlogLayout>
+					<Content />
+				</BlogLayout>
+			</div>
+		</section>
+
+		<!-- Bottom CTA -->
+		<section class="py-16 border-t border-night-lighter">
+			<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+				<span class="text-4xl text-primary mb-4 block">✦</span>
+				<h2 class="font-serif text-3xl sm:text-4xl text-ivory mb-4">
+					Ready to Begin?
+				</h2>
+				<p class="text-charcoal-light text-lg mb-8 max-w-2xl mx-auto">
+					Take the first step towards your wellness journey. Book a consultation to discuss how {service.data.title.toLowerCase()} can support you.
+				</p>
+				<div class="flex flex-col sm:flex-row gap-4 justify-center">
+					<Button href="/#contact" variant="primary" size="lg">
+						Book a Consultation
+					</Button>
+					<Button href="/#services" variant="outline" size="lg">
+						View All Services
+					</Button>
+				</div>
+			</div>
+		</section>
+	</article>
+</Layout>
