@@ -1,0 +1,60 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+	prevPost?: CollectionEntry<'blog'>;
+	nextPost?: CollectionEntry<'blog'>;
+}
+
+const { prevPost, nextPost } = Astro.props;
+---
+
+{(prevPost || nextPost) && (
+	<nav class="mt-16 pt-8 border-t border-night-lighter">
+		<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+			<!-- Previous Post -->
+			{prevPost ? (
+				<a
+					href={`/blog/${prevPost.slug}`}
+					class="group p-6 bg-night-light border border-night-lighter rounded-lg hover:border-primary/30 hover:bg-night-lighter transition-all duration-300 text-left"
+				>
+					<div class="flex items-center gap-2 text-charcoal-light text-sm mb-2">
+						<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+						</svg>
+						<span class="uppercase tracking-wider font-medium">Previous</span>
+					</div>
+					<h3 class="font-serif text-lg text-ivory group-hover:text-primary transition-colors duration-300 line-clamp-2">
+						{prevPost.data.title}
+					</h3>
+					<p class="text-charcoal-light text-sm mt-2 line-clamp-2">
+						{prevPost.data.description}
+					</p>
+				</a>
+			) : (
+				<div class="hidden sm:block"></div>
+			)}
+
+			<!-- Next Post -->
+			{nextPost && (
+				<a
+					href={`/blog/${nextPost.slug}`}
+					class="group p-6 bg-night-light border border-night-lighter rounded-lg hover:border-primary/30 hover:bg-night-lighter transition-all duration-300 text-left sm:text-right"
+				>
+					<div class="flex items-center gap-2 text-charcoal-light text-sm mb-2 sm:justify-end">
+						<span class="uppercase tracking-wider font-medium">Next</span>
+						<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+						</svg>
+					</div>
+					<h3 class="font-serif text-lg text-ivory group-hover:text-primary transition-colors duration-300 line-clamp-2">
+						{nextPost.data.title}
+					</h3>
+					<p class="text-charcoal-light text-sm mt-2 line-clamp-2">
+						{nextPost.data.description}
+					</p>
+				</a>
+			)}
+		</div>
+	</nav>
+)}

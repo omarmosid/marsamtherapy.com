@@ -1,132 +1,138 @@
 ---
-import { getCollection, type CollectionEntry } from 'astro:content';
-import Layout from '../../layouts/Layout.astro';
-import BlogCard from '../../components/blog/BlogCard.astro';
-import ConstellationBg from '../../components/shared/ConstellationBg.astro';
-import { getRelativeTime } from '../../utils/date';
+import { getCollection, type CollectionEntry } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import BlogCard from "../../components/blog/BlogCard.astro";
+import ConstellationBg from "../../components/shared/ConstellationBg.astro";
+import { getRelativeTime } from "../../utils/date";
 
 // Get all blog posts, filter out drafts, and sort by date (newest first)
-const allPosts = await getCollection('blog', (entry) => {
-	return entry.data.draft !== true;
+const allPosts = await getCollection("blog", (entry) => {
+  return entry.data.draft !== true;
 });
 
 const posts = allPosts
-	.sort((a, b) => 
-		b.data.pubDate.getTime() - a.data.pubDate.getTime()
-	)
-	.map((post) => ({
-		title: post.data.title,
-		excerpt: post.data.description,
-		date: getRelativeTime(post.data.pubDate),
-		category: post.data.tags[0]?.replace(/-/g, ' ') || 'Article',
-		slug: post.slug,
-		image: post.data.image 
-			? (typeof post.data.image.url === 'string' ? post.data.image.url : post.data.image.url.src)
-			: 'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=600&q=80&auto=format&fit=crop',
-	}));
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+  .map((post) => ({
+    title: post.data.title,
+    excerpt: post.data.description,
+    date: getRelativeTime(post.data.pubDate),
+    category: post.data.tags[0]?.replace(/-/g, " ") || "Article",
+    slug: post.slug,
+    image: post.data.image
+      ? typeof post.data.image.url === "string"
+        ? post.data.image.url
+        : post.data.image.url.src
+      : "https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=600&q=80&auto=format&fit=crop",
+  }));
 
 // Structured data for blog listing
 const structuredData = {
-	"@context": "https://schema.org",
-	"@type": "Blog",
-	"@id": new URL('/blog', Astro.site).toString(),
-	"url": new URL('/blog', Astro.site).toString(),
-	"name": "Marsam Therapy Blog",
-	"description": "Insights on mental health, faith-informed healing, and personal growth",
-	"author": {
-		"@type": "Person",
-		"name": "Mariya Samreen",
-		"jobTitle": "Psychological Counsellor"
-	},
-	"publisher": {
-		"@type": "Organization",
-		"name": "Marsam Therapy",
-		"logo": {
-			"@type": "ImageObject",
-			"url": new URL('/logo.png', Astro.site).toString()
-		}
-	},
-	"blogPost": allPosts.map((post) => ({
-		"@type": "BlogPosting",
-		"headline": post.data.title,
-		"description": post.data.description,
-		"datePublished": post.data.pubDate.toISOString(),
-		"author": {
-			"@type": "Person",
-			"name": post.data.author
-		},
-		"url": new URL(`/blog/${post.slug}`, Astro.site).toString()
-	}))
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "@id": new URL("/blog", Astro.site).toString(),
+  url: new URL("/blog", Astro.site).toString(),
+  name: "Marsam Therapy Blog",
+  description:
+    "Insights on mental health, faith-informed healing, and personal growth",
+  author: {
+    "@type": "Person",
+    name: "Mariya Samreen",
+    jobTitle: "Psychological Counsellor",
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "Marsam Therapy",
+    logo: {
+      "@type": "ImageObject",
+      url: new URL("/logo.png", Astro.site).toString(),
+    },
+  },
+  blogPost: allPosts.map((post) => ({
+    "@type": "BlogPosting",
+    headline: post.data.title,
+    description: post.data.description,
+    datePublished: post.data.pubDate.toISOString(),
+    author: {
+      "@type": "Person",
+      name: post.data.author,
+    },
+    url: new URL(`/blog/${post.slug}`, Astro.site).toString(),
+  })),
 };
 ---
 
-<Layout 
-	title="Blog" 
-	description="Insights on mental health, faith-informed healing, and personal growth from Mariya Samreen. Read about therapy, resilience, anxiety management, and spiritual wellness."
-	keywords={['mental health blog', 'therapy insights', 'faith-informed healing', 'personal growth', 'psychological counselling', 'Islamic therapy', 'anxiety management', 'trauma recovery']}
+<Layout
+  title="Blog"
+  description="Insights on mental health, faith-informed healing, and personal growth from Mariya Samreen. Read about therapy, resilience, anxiety management, and spiritual wellness."
+  keywords={[
+    "mental health blog",
+    "therapy insights",
+    "faith-informed healing",
+    "personal growth",
+    "psychological counselling",
+    "Islamic therapy",
+    "anxiety management",
+    "trauma recovery",
+  ]}
 >
-	<Fragment slot="head">
-		<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
-	</Fragment>
-	<!-- Hero Section -->
-	<section class="relative py-20 sm:py-28 bg-gradient-to-br from-night via-night-light to-night-lighter overflow-hidden">
-		<ConstellationBg opacity={0.3} />
-		<div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-			<p class="text-primary font-semibold tracking-wider mb-3 text-sm">INSIGHTS & REFLECTIONS</p>
-			<h1 class="font-serif text-4xl sm:text-5xl text-ivory mb-4">
-				Blog
-			</h1>
-			<p class="text-charcoal-light max-w-2xl mx-auto">
-				Thoughts on mental health, faith-informed healing, and the journey to inner peace. 
-				May these words bring light to your path.
-			</p>
-		</div>
-	</section>
+  <Fragment slot="head">
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(structuredData)}
+    />
+  </Fragment>
+  <!-- Hero Section -->
+  <section
+    class="relative py-20 sm:py-28 bg-gradient-to-br from-night via-night-light to-night-lighter overflow-hidden"
+  >
+    <ConstellationBg opacity={0.3} />
+    <div
+      class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center"
+    >
+      <p class="text-primary font-semibold tracking-wider mb-3 text-sm">
+        INSIGHTS & REFLECTIONS
+      </p>
+      <h1 class="font-serif text-4xl sm:text-5xl text-ivory mb-4">Blog</h1>
+      <p class="text-charcoal-light max-w-2xl mx-auto">
+        Thoughts on mental health, faith-informed healing, and the journey to
+        inner peace. May these words bring light to your path.
+      </p>
+    </div>
+  </section>
 
-	<!-- Blog Posts Grid -->
-	<section class="py-16 sm:py-24 bg-night">
-		<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-			<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-				{posts.map((post) => (
-					<BlogCard {...post} />
-				))}
-			</div>
-			
-			<!-- Load More (Placeholder) -->
-			<div class="text-center mt-12">
-				<button 
-					class="px-8 py-3 border-2 border-starlight text-primary font-medium rounded-md hover:bg-primary hover:text-night transition-colors duration-300"
-					disabled
-				>
-					More Posts Coming Soon
-				</button>
-			</div>
-		</div>
-	</section>
+  <!-- Blog Posts Grid -->
+  <section class="py-16 sm:py-24 bg-night">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {posts.map((post) => <BlogCard {...post} />)}
+      </div>
+    </div>
+  </section>
 
-	<!-- Newsletter CTA -->
-	<section class="py-16 sm:py-20 bg-night-light">
-		<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-			<span class="text-4xl mb-4 block text-primary">✦</span>
-			<h2 class="font-serif text-2xl sm:text-3xl text-ivory mb-4">
-				Stay Connected
-			</h2>
-			<p class="text-charcoal-light mb-8">
-				Subscribe to receive thoughtful insights on mental health and wellbeing directly in your inbox.
-			</p>
-			<form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-				<input
-					type="email"
-					placeholder="Your email address"
-					class="flex-1 px-4 py-3 rounded-md border border-night-lighter bg-night text-charcoal placeholder:text-charcoal-dark focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
-				/>
-				<button
-					type="submit"
-					class="px-6 py-3 bg-primary text-night font-medium rounded-md hover:bg-primary-bright shadow-md hover:shadow-lg transition-all"
-				>
-					Subscribe
-				</button>
-			</form>
-		</div>
-	</section>
+  <!-- Newsletter CTA -->
+  <section class="py-16 sm:py-20 bg-night-light">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <span class="text-4xl mb-4 block text-primary">✦</span>
+      <h2 class="font-serif text-2xl sm:text-3xl text-ivory mb-4">
+        Stay Connected
+      </h2>
+      <p class="text-charcoal-light mb-8">
+        Subscribe to receive thoughtful insights on mental health and wellbeing
+        directly in your inbox.
+      </p>
+      <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+        <input
+          type="email"
+          placeholder="Your email address"
+          class="flex-1 px-4 py-3 rounded-md border border-night-lighter bg-night text-charcoal placeholder:text-charcoal-dark focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+        />
+        <button
+          type="submit"
+          class="px-6 py-3 bg-primary text-night font-medium rounded-md hover:bg-primary-bright shadow-md hover:shadow-lg transition-all"
+        >
+          Subscribe
+        </button>
+      </form>
+    </div>
+  </section>
 </Layout>

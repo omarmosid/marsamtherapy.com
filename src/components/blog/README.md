@@ -130,3 +130,62 @@ The prose classes can be customized by modifying the BlogLayout component. Curre
 4. **Use semantic HTML** - Proper heading hierarchy (h1 → h2 → h3)
 5. **Add footer** - Author info, back link, related posts
 6. **Optimize images** - Use appropriate sizes and formats
+
+## PostNavigation
+
+A navigation component that displays previous and next blog posts at the bottom of a blog post page.
+
+### Features
+
+- **Responsive layout** - Single column on mobile, two columns on desktop
+- **Smart positioning** - Previous on left, next on right (desktop)
+- **Hover effects** - Border color and background change on hover
+- **Truncated text** - Titles and descriptions limited to 2 lines with ellipsis
+- **Arrow indicators** - Visual cues for navigation direction
+- **Empty state handling** - Gracefully handles missing prev/next posts
+
+### Usage
+
+```astro
+---
+import PostNavigation from '../../components/blog/PostNavigation.astro';
+
+// In getStaticPaths, calculate prev/next posts
+const sortedPosts = allPosts.sort((a, b) => 
+	b.data.pubDate.getTime() - a.data.pubDate.getTime()
+);
+
+const prevPost = index > 0 ? sortedPosts[index - 1] : undefined;
+const nextPost = index < sortedPosts.length - 1 ? sortedPosts[index + 1] : undefined;
+---
+
+<article>
+	<!-- Blog content -->
+	<PostNavigation prevPost={prevPost} nextPost={nextPost} />
+</article>
+```
+
+### Props
+
+```typescript
+interface Props {
+	prevPost?: CollectionEntry<'blog'>;  // Newer post (optional)
+	nextPost?: CollectionEntry<'blog'>;  // Older post (optional)
+}
+```
+
+### Behavior
+
+- **Previous post**: Displays on the left (newer post, chronologically)
+- **Next post**: Displays on the right (older post, chronologically)
+- If only one post exists, it will display in its appropriate position
+- If no posts exist (first or last), the component renders nothing
+- On mobile, both posts stack vertically with proper alignment
+
+### Styling
+
+- Card background: `bg-night-light`
+- Border: `border-night-lighter` → `border-primary/30` on hover
+- Text colors: `text-ivory` for titles, `text-charcoal-light` for descriptions
+- Hover state: Title changes to `text-primary`
+- Transitions: All state changes are smoothly animated

@@ -4,21 +4,37 @@ import type { CollectionEntry } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import BlogLayout from '../../components/blog/BlogLayout.astro';
 import Button from '../../components/shared/ui/Button.astro';
+import PostNavigation from '../../components/blog/PostNavigation.astro';
 import { getRelativeTime, getFormattedDate } from '../../utils/date';
 
 export async function getStaticPaths() {
-	const blogPosts = await getCollection('blog');
-	return blogPosts.map((post) => ({
-		params: { slug: post.slug },
-		props: { post },
-	}));
+	// Get all published posts sorted by date (newest first)
+	const allPosts = await getCollection('blog', (entry) => {
+		return entry.data.draft !== true;
+	});
+	const sortedPosts = allPosts.sort((a, b) => 
+		b.data.pubDate.getTime() - a.data.pubDate.getTime()
+	);
+
+	return sortedPosts.map((post, index) => {
+		// Previous post is newer (index - 1), next post is older (index + 1)
+		const prevPost = index > 0 ? sortedPosts[index - 1] : undefined;
+		const nextPost = index < sortedPosts.length - 1 ? sortedPosts[index + 1] : undefined;
+
+		return {
+			params: { slug: post.slug },
+			props: { post, prevPost, nextPost },
+		};
+	});
 }
 
 interface Props {
 	post: CollectionEntry<'blog'>;
+	prevPost?: CollectionEntry<'blog'>;
+	nextPost?: CollectionEntry<'blog'>;
 }
 
-const { post } = Astro.props;
+const { post, prevPost, nextPost } = Astro.props;
 const { Content } = await post.render();
 
 const formattedDate = getFormattedDate(post.data.pubDate);
@@ -142,8 +158,11 @@ const structuredData = {
 			<Content />
 		</BlogLayout>
 
+		<!-- Previous/Next Navigation -->
+		<PostNavigation prevPost={prevPost} nextPost={nextPost} />
+
 		<!-- Article Footer -->
-		<footer class="mt-16 pt-8 border-t border-night-lighter">
+		<footer class="mt-12 pt-8 border-t border-night-lighter">
 			<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
 				<!-- Author Card -->
 				<div class="flex items-center gap-4">
