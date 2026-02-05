@@ -1,0 +1,97 @@
+---
+const faqs = [
+	{
+		question: "Are you a Muslim psychologist?",
+		answer: "Yes, I am a Muslim female psychological counsellor who integrates Islamic principles with evidence-based therapeutic techniques. My practice honors both your mental health needs and your faith."
+	},
+	{
+		question: "Do you offer Islamic therapy or halal counselling?",
+		answer: "Yes, I offer faith-informed therapy that aligns with Islamic values. My approach incorporates concepts like sabr (patience), tawakkul (trust in Allah), and rahma (compassion) alongside proven psychological methods."
+	},
+	{
+		question: "Can you help Muslim women specifically?",
+		answer: "Absolutely. As a Muslim female psychologist, I understand the unique challenges Muslim women face—from cultural expectations to identity struggles, family dynamics, and navigating faith in modern life. This is a safe, judgment-free space for you."
+	},
+	{
+		question: "Do I need to be Muslim to work with you?",
+		answer: "Not at all. While I specialize in serving the Muslim community, my practice welcomes anyone seeking compassionate, faith-informed care. I respect all spiritual backgrounds and journeys."
+	},
+	{
+		question: "What languages do you offer therapy in?",
+		answer: "I provide counselling in English, Hindi, and Urdu, making therapy accessible for diverse Muslim communities."
+	},
+	{
+		question: "Do you offer online therapy sessions?",
+		answer: "Yes, I offer online therapy sessions to make mental health support accessible regardless of your location. This is especially helpful for those seeking a Muslim therapist in areas where culturally sensitive care may be limited."
+	}
+];
+---
+
+<section id="faq" class="py-20 sm:py-28 bg-night">
+	<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+		<div class="text-center mb-12">
+			<p class="text-primary font-semibold tracking-wider mb-3 text-sm">
+				FREQUENTLY ASKED QUESTIONS
+			</p>
+			<h2 class="font-serif text-3xl sm:text-4xl text-ivory mb-4">
+				Questions About Muslim Therapy
+			</h2>
+			<p class="text-charcoal-light leading-relaxed">
+				Common questions about working with a Muslim psychologist
+			</p>
+		</div>
+
+		<div class="space-y-4">
+			{faqs.map((faq) => (
+				<details class="group bg-night-light border border-night-lighter rounded-lg overflow-hidden">
+					<summary class="cursor-pointer p-6 flex items-center justify-between hover:bg-night-lighter transition-colors duration-200">
+						<h3 class="font-serif text-lg text-ivory pr-8 group-open:text-primary transition-colors">
+							{faq.question}
+						</h3>
+						<svg 
+							class="w-5 h-5 text-primary flex-shrink-0 transform transition-transform group-open:rotate-180" 
+							fill="none" 
+							stroke="currentColor" 
+							viewBox="0 0 24 24"
+						>
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+						</svg>
+					</summary>
+					<div class="px-6 pb-6">
+						<p class="text-charcoal-light leading-relaxed border-t border-night-lighter pt-4">
+							{faq.answer}
+						</p>
+					</div>
+				</details>
+			))}
+		</div>
+
+		<div class="mt-12 p-6 bg-night-light border border-night-lighter rounded-lg text-center">
+			<p class="text-charcoal-light mb-4">
+				Have more questions about Islamic counselling or faith-informed therapy?
+			</p>
+			<a 
+				href="#contact" 
+				class="text-primary hover:text-primary-light font-medium inline-flex items-center gap-2 transition-colors"
+			>
+				Get in touch
+				<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+				</svg>
+			</a>
+		</div>
+	</div>
+</section>
+
+<script type="application/ld+json" set:html={JSON.stringify({
+	"@context": "https://schema.org",
+	"@type": "FAQPage",
+	"mainEntity": faqs.map(faq => ({
+		"@type": "Question",
+		"name": faq.question,
+		"acceptedAnswer": {
+			"@type": "Answer",
+			"text": faq.answer
+		}
+	}))
+})} />

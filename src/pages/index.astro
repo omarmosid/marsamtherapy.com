@@ -2,8 +2,10 @@
 import Layout from '../layouts/Layout.astro';
 import HeroSection from '../components/home/HeroSection.astro';
 import AboutSection from '../components/home/AboutSection.astro';
+import MuslimTherapySection from '../components/home/MuslimTherapySection.astro';
 import ServicesSection from '../components/home/ServicesSection.astro';
 import ApproachSection from '../components/home/ApproachSection.astro';
+import FAQSection from '../components/home/FAQSection.astro';
 import ContactSection from '../components/home/ContactSection.astro';
 
 // Structured data for the homepage
@@ -16,7 +18,7 @@ const structuredData = {
 	"url": Astro.site?.toString(),
 	"logo": new URL('/logo.png', Astro.site).toString(),
 	"image": new URL('/og-image.jpg', Astro.site).toString(),
-	"description": "Faith-informed psychological counselling services with Islamic principles. Specializing in anxiety, stress management, trauma counselling, and life transitions.",
+	"description": "Muslim female psychologist providing faith-informed psychological counselling with Islamic principles. Specializing in anxiety, stress management, trauma counselling, and life transitions for Muslim individuals and families.",
 	"telephone": "+1-XXX-XXX-XXXX",
 	"email": "contact@marsamtherapy.com",
 	"priceRange": "$$",
@@ -48,7 +50,7 @@ const structuredData = {
 		"@type": "Person",
 		"name": "Mariya Samreen",
 		"jobTitle": "Psychological Counsellor",
-		"description": "Experienced psychological counsellor specializing in faith-informed therapy with Islamic principles. Over 4 years of experience helping individuals, families, and communities.",
+		"description": "Experienced Muslim female psychological counsellor specializing in faith-informed therapy with Islamic principles. Over 4 years of experience helping Muslim individuals, families, and communities navigate mental health challenges with cultural and spiritual sensitivity.",
 		"knowsLanguage": ["English", "Hindi", "Urdu"],
 		"alumniOf": "Your University",
 		"hasCredential": "Licensed Psychological Counsellor"
@@ -88,16 +90,25 @@ const structuredData = {
 					"name": "Faith-Informed Therapy",
 					"description": "Therapy that integrates Islamic principles with psychological approaches"
 				}
+			},
+			{
+				"@type": "Offer",
+				"itemOffered": {
+					"@type": "Service",
+					"name": "Islamic Counselling for Muslim Women",
+					"description": "Culturally sensitive therapy for Muslim women navigating mental health with faith"
+				}
 			}
 		]
-	}
+	},
+	"keywords": "muslim psychologist, muslim female psychologist, muslim therapist, islamic counselling, muslim counsellor, woman psychologist islam, faith-informed therapy, islamic therapy, muslim mental health, halal therapy, therapy for muslims"
 };
 ---
 
 <Layout 
-	title="Home"
-	description="Mariya Samreen - Psychological Counsellor offering faith-informed therapy with Islamic principles. Specializing in anxiety, trauma, stress management, and life transitions."
-	keywords={['therapy', 'counselling', 'faith-informed therapy', 'Islamic counselling', 'mental health', 'psychological counsellor', 'anxiety therapy', 'trauma counselling', 'stress management', 'Mariya Samreen']}
+	title="Muslim Female Psychologist | Faith-Informed Therapy"
+	description="Mariya Samreen is a Muslim female psychological counsellor offering Islamic therapy and faith-informed counselling. Specializing in anxiety, trauma, and life transitions for Muslim individuals and families."
+	keywords={['muslim psychologist', 'muslim female psychologist', 'muslim therapist', 'islamic counselling', 'muslim counsellor', 'woman psychologist islam', 'muslim mental health', 'islamic therapy', 'faith-based therapy', 'muslim women therapy', 'islamic psychology', 'halal therapy', 'therapy for muslims', 'Mariya Samreen']}
 >
 	<Fragment slot="head">
 		<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
@@ -105,7 +116,9 @@ const structuredData = {
 	
 	<HeroSection />
 	<AboutSection />
+	<MuslimTherapySection />
 	<ServicesSection />
 	<ApproachSection />
+	<FAQSection />
 	<ContactSection />
 </Layout>
