@@ -1,28 +1,35 @@
 ---
-import '../styles/global.css';
-import Header from '../components/shared/Header.astro';
-import Footer from '../components/shared/Footer.astro';
+import "../styles/global.css";
+import Header from "../components/shared/Header.astro";
+import Footer from "../components/shared/Footer.astro";
 
 interface Props {
-	title: string;
-	description?: string;
-	image?: string;
-	article?: boolean;
-	publishedTime?: string;
-	modifiedTime?: string;
-	author?: string;
-	keywords?: string[];
+  title: string;
+  description?: string;
+  image?: string;
+  article?: boolean;
+  publishedTime?: string;
+  modifiedTime?: string;
+  author?: string;
+  keywords?: string[];
 }
 
-const { 
-	title, 
-	description = 'Mariya Samreen - Psychological Counsellor offering faith-informed therapy and counselling services with Islamic principles.',
-	image = '/og-image.jpg',
-	article = false,
-	publishedTime,
-	modifiedTime,
-	author = 'Mariya Samreen',
-	keywords = ['therapy', 'counselling', 'faith-informed therapy', 'Islamic counselling', 'mental health', 'psychological counsellor']
+const {
+  title,
+  description = "Mariya Samreen - Psychological Counsellor offering faith-informed therapy and counselling services with Islamic principles.",
+  image = "/og-image.jpg",
+  article = false,
+  publishedTime,
+  modifiedTime,
+  author = "Mariya Samreen",
+  keywords = [
+    "therapy",
+    "counselling",
+    "faith-informed therapy",
+    "Islamic counselling",
+    "mental health",
+    "psychological counsellor",
+  ],
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -32,61 +39,63 @@ const fullTitle = `${title} | Marsam Therapy`;
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		
-		<!-- Primary Meta Tags -->
-		<title>{fullTitle}</title>
-		<meta name="title" content={fullTitle} />
-		<meta name="description" content={description} />
-		<meta name="keywords" content={keywords.join(', ')} />
-		<meta name="author" content={author} />
-		<link rel="canonical" href={canonicalURL} />
-		
-		<!-- Open Graph / Facebook -->
-		<meta property="og:type" content={article ? 'article' : 'website'} />
-		<meta property="og:url" content={canonicalURL} />
-		<meta property="og:title" content={fullTitle} />
-		<meta property="og:description" content={description} />
-		<meta property="og:image" content={ogImageURL} />
-		<meta property="og:site_name" content="Marsam Therapy" />
-		<meta property="og:locale" content="en_US" />
-		
-		{article && publishedTime && (
-			<meta property="article:published_time" content={publishedTime} />
-		)}
-		{article && modifiedTime && (
-			<meta property="article:modified_time" content={modifiedTime} />
-		)}
-		{article && (
-			<meta property="article:author" content={author} />
-		)}
-		
-		<!-- Twitter -->
-		<meta name="twitter:card" content="summary_large_image" />
-		<meta name="twitter:url" content={canonicalURL} />
-		<meta name="twitter:title" content={fullTitle} />
-		<meta name="twitter:description" content={description} />
-		<meta name="twitter:image" content={ogImageURL} />
-		
-		<!-- Favicon -->
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-		
-		<!-- Additional Meta -->
-		<meta name="generator" content={Astro.generator} />
-		<meta name="robots" content="index, follow" />
-		<meta name="theme-color" content="#0a1810" />
-		
-		<!-- Slot for additional head content -->
-		<slot name="head" />
-	</head>
-	<body class="min-h-screen flex flex-col">
-		<Header />
-		<main class="flex-1 pt-16 sm:pt-20">
-			<slot />
-		</main>
-		<Footer />
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Primary Meta Tags -->
+    <title>{fullTitle}</title>
+    <meta name="title" content={fullTitle} />
+    <meta name="description" content={description} />
+    <meta name="keywords" content={keywords.join(", ")} />
+    <meta name="author" content={author} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content={article ? "article" : "website"} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:site_name" content="Marsam Therapy" />
+    <meta property="og:locale" content="en_US" />
+
+    {
+      article && publishedTime && (
+        <meta property="article:published_time" content={publishedTime} />
+      )
+    }
+    {
+      article && modifiedTime && (
+        <meta property="article:modified_time" content={modifiedTime} />
+      )
+    }
+    {article && <meta property="article:author" content={author} />}
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalURL} />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+    <!-- Additional Meta -->
+    <meta name="generator" content={Astro.generator} />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#0a1810" />
+
+    <!-- Slot for additional head content -->
+    <slot name="head" />
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <Header />
+    <main class="flex-1 pt-16 sm:pt-20">
+      <slot />
+    </main>
+    <Footer />
+  </body>
 </html>
