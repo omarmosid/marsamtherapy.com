@@ -68,7 +68,11 @@ npm run astro -- info    # Show environment info
 │   ├── env.d.ts              # TypeScript environment declarations
 │   ├── pages/                # File-based routing (*.astro, *.md)
 │   ├── components/           # Reusable components
-│   │   ├── shared/           # Cross-page components (Header, Footer, Button, etc.)
+│   │   ├── shared/           # Cross-page components
+│   │   │   ├── ui/           # Common UI components (Button, Input, Textarea, etc.)
+│   │   │   ├── Header.astro
+│   │   │   ├── Footer.astro
+│   │   │   └── ConstellationBg.astro
 │   │   ├── home/             # Home page specific sections
 │   │   └── blog/             # Blog specific components
 │   ├── layouts/              # Page layouts (Layout.astro)
@@ -122,9 +126,25 @@ import { myLocalUtil } from './utils/helpers';
 - Props interface always at the top of frontmatter
 - Use destructuring for props
 - Use `slot` for flexible content injection (e.g., icons, custom content)
+- **IMPORTANT**: Always use shared UI components from `src/components/shared/ui/` for forms and common elements
+
+#### Available UI Components
+
+Use these components instead of raw HTML elements:
+
+- **Button** - Primary, secondary, outline variants with sizes
+- **Input** - Text, email, tel, password inputs with labels
+- **Textarea** - Multi-line text input with labels
+- **Select** - Dropdown select with options
+- **Checkbox** - Checkbox with label
+- **Label** - Standalone label with required indicator
 
 ```astro
 ---
+import Button from '../shared/ui/Button.astro';
+import Input from '../shared/ui/Input.astro';
+import Textarea from '../shared/ui/Textarea.astro';
+
 interface Props {
 	title: string;
 	description: string;
@@ -138,6 +158,28 @@ const { title, description } = Astro.props;
 	<h3 class="font-serif text-xl text-ivory mb-2">{title}</h3>
 	<p class="text-charcoal-light">{description}</p>
 </div>
+
+<!-- Example: Use UI components for forms -->
+<form>
+	<Input
+		type="email"
+		id="email"
+		name="email"
+		label="Email Address"
+		placeholder="your@email.com"
+		required
+	/>
+	<Textarea
+		id="message"
+		name="message"
+		label="Message"
+		rows={5}
+		required
+	/>
+	<Button type="submit" variant="primary" size="lg">
+		Submit
+	</Button>
+</form>
 ```
 
 ### Formatting
