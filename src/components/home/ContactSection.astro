@@ -2,12 +2,13 @@
 import ContactForm from './ContactForm.astro';
 ---
 
-<section id="contact" class="relative py-20 sm:py-28 bg-night-light overflow-hidden">
+<section id="contact" class="relative py-20 sm:py-28 overflow-hidden">
+	<div class="absolute inset-0 bg-night-light/80"></div>
 	<!-- Decorative stars -->
-	<div class="absolute top-12 left-12 text-primary text-3xl opacity-10">✦</div>
-	<div class="absolute top-32 right-20 text-primary text-2xl opacity-8">✦</div>
-	<div class="absolute bottom-24 left-24 text-primary text-xl opacity-12">✦</div>
-	<div class="absolute bottom-40 right-28 text-primary text-2xl opacity-10">✦</div>
+	<div class="absolute top-12 left-12 text-primary text-3xl opacity-10 z-[1]">✦</div>
+	<div class="absolute top-32 right-20 text-primary text-2xl opacity-8 z-[1]">✦</div>
+	<div class="absolute bottom-24 left-24 text-primary text-xl opacity-12 z-[1]">✦</div>
+	<div class="absolute bottom-40 right-28 text-primary text-2xl opacity-10 z-[1]">✦</div>
 	
 	<div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 		<div class="grid lg:grid-cols-2 gap-12 lg:gap-16">

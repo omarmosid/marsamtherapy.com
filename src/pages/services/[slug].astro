@@ -51,14 +51,15 @@ const structuredData = {
 		<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
 	</Fragment>
 
-	<article class="min-h-screen bg-night">
+	<article class="min-h-screen">
 		<!-- Hero Section -->
-		<section class="relative py-12 sm:py-16 bg-gradient-to-br from-night via-night-light to-night-lighter overflow-hidden">
+		<section class="relative py-12 sm:py-16 overflow-hidden">
+			<div class="absolute inset-0 bg-night/40"></div>
 			<!-- Decorative Elements -->
-			<div class="absolute top-20 right-20 text-primary text-3xl opacity-10">✦</div>
-			<div class="absolute bottom-20 left-20 text-primary text-2xl opacity-8">✦</div>
+			<div class="absolute top-20 right-20 text-primary text-3xl opacity-10 z-[1]">✦</div>
+			<div class="absolute bottom-20 left-20 text-primary text-2xl opacity-8 z-[1]">✦</div>
 			
-			<div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+			<div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 				<!-- Back Link -->
 				<a 
 					href="/#services" 
@@ -132,8 +133,9 @@ const structuredData = {
 		</section>
 
 		<!-- Benefits Section -->
-		<section class="py-16 sm:py-20 border-b border-night-lighter">
-			<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+		<section class="relative py-16 sm:py-20 border-b border-night-lighter/50">
+			<div class="absolute inset-0 bg-night/80"></div>
+			<div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 				<div class="text-center mb-12">
 					<h2 class="font-serif text-3xl sm:text-4xl text-ivory mb-4">
 						What You'll Gain
@@ -161,8 +163,9 @@ const structuredData = {
 		</section>
 
 		<!-- Detailed Content Section -->
-		<section class="py-16 sm:py-20">
-			<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+		<section class="relative py-16 sm:py-20">
+			<div class="absolute inset-0 bg-night-light/80"></div>
+			<div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 				<BlogLayout>
 					<Content />
 				</BlogLayout>
@@ -170,8 +173,9 @@ const structuredData = {
 		</section>
 
 		<!-- Bottom CTA -->
-		<section class="py-16 border-t border-night-lighter">
-			<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+		<section class="relative py-16 border-t border-night-lighter/50">
+			<div class="absolute inset-0 bg-night/80"></div>
+			<div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
 				<span class="text-4xl text-primary mb-4 block">✦</span>
 				<h2 class="font-serif text-3xl sm:text-4xl text-ivory mb-4">
 					Ready to Begin?

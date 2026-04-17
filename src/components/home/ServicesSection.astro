@@ -7,12 +7,13 @@ const services = await getCollection('services');
 const sortedServices = services.sort((a, b) => a.data.order - b.data.order);
 ---
 
-<section id="services" class="relative py-20 sm:py-28 bg-night-light overflow-hidden">
+<section id="services" class="relative py-20 sm:py-28 overflow-hidden">
+	<div class="absolute inset-0 bg-night-light/80"></div>
 	<!-- Decorative stars -->
-	<div class="absolute top-16 right-20 text-primary text-2xl opacity-8">✦</div>
-	<div class="absolute top-40 left-16 text-primary text-xl opacity-6">✦</div>
-	<div class="absolute bottom-32 right-32 text-primary text-3xl opacity-10">✦</div>
-	<div class="absolute bottom-16 left-24 text-primary text-2xl opacity-8">✦</div>
+	<div class="absolute top-16 right-20 text-primary text-2xl opacity-8 z-[1]">✦</div>
+	<div class="absolute top-40 left-16 text-primary text-xl opacity-6 z-[1]">✦</div>
+	<div class="absolute bottom-32 right-32 text-primary text-3xl opacity-10 z-[1]">✦</div>
+	<div class="absolute bottom-16 left-24 text-primary text-2xl opacity-8 z-[1]">✦</div>
 	
 	<div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 		<div class="text-center mb-12 sm:mb-16">

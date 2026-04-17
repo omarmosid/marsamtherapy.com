@@ -1,15 +1,13 @@
 ---
 import Button from "../shared/ui/Button.astro";
-import ConstellationBg from "../shared/ConstellationBg.astro";
 ---
 
 <section
-  class="relative min-h-[90vh] flex items-center overflow-hidden bg-gradient-to-br from-night via-night-light to-night-lighter"
+  class="relative min-h-[90vh] flex items-center overflow-hidden"
 >
-  <!-- Background Image -->
-  <div class="absolute inset-0 opacity-20">
-    <img src="/stars.jpg" alt="" class="w-full h-full object-cover" />
-  </div>
+  <!-- Semi-transparent tint over the global shader bg -->
+  <div class="absolute inset-0 bg-night/40"></div>
+
   <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
     <div class="max-w-3xl">
       <h1

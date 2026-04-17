@@ -1,0 +1,108 @@
+---
+/**
+ * Animated mesh gradient background using @paper-design/shaders.
+ * Renders a fixed full-viewport WebGL canvas behind all page content.
+ * Falls back gracefully to the body's CSS background if WebGL is unavailable.
+ *
+ * Features:
+ * - Respects prefers-reduced-motion (static frame, no animation)
+ * - Pauses when document is hidden (saves GPU/battery)
+ * - Caps pixel count on mobile for performance
+ * - Cleans up on Astro View Transitions
+ */
+---
+
+<div id="mesh-gradient-bg" class="fixed inset-0 -z-10" aria-hidden="true">
+	<div id="mesh-gradient-mount" class="w-full h-full"></div>
+</div>
+
+<script>
+	import {
+		ShaderMount,
+		meshGradientFragmentShader,
+		getShaderColorFromString,
+		ShaderFitOptions,
+	} from '@paper-design/shaders';
+
+	function initMeshGradient() {
+		const container = document.getElementById('mesh-gradient-mount');
+		if (!container) return;
+
+		// Don't double-init (View Transitions may re-run scripts)
+		if (container.hasAttribute('data-shader-initialized')) return;
+		container.setAttribute('data-shader-initialized', '');
+
+		const prefersReducedMotion = window.matchMedia(
+			'(prefers-reduced-motion: reduce)'
+		).matches;
+
+		// Lower pixel budget on mobile for battery/perf
+		const isMobile = window.innerWidth < 768;
+		const maxPixelCount = isMobile ? 500_000 : 1920 * 1080 * 4;
+		const minPixelRatio = isMobile ? 1 : 2;
+
+		// Theme colors: 3 dark greens + orange accent
+		const colors = [
+			'#1a2f24', // night-lighter
+			'#0f2318', // night-light
+			'#234030', // night-lightest
+			'#f97316', // primary orange
+		];
+
+		const uniforms = {
+			u_colors: colors.map(getShaderColorFromString),
+			u_colorsCount: colors.length,
+			u_distortion: 0.8,
+			u_swirl: 0.15,
+			u_grainMixer: 0,
+			u_grainOverlay: 0.05,
+
+			// Sizing: cover the viewport, no offset/rotation
+			u_fit: ShaderFitOptions['cover'],
+			u_scale: 1,
+			u_rotation: 0,
+			u_offsetX: 0,
+			u_offsetY: 0,
+			u_originX: 0.5,
+			u_originY: 0.5,
+			u_worldWidth: 0,
+			u_worldHeight: 0,
+		};
+
+		const speed = prefersReducedMotion ? 0 : 0.4;
+		const startFrame = prefersReducedMotion ? 20_000 : 0;
+
+		let mount: ShaderMount | null = null;
+
+		try {
+			mount = new ShaderMount(
+				container,
+				meshGradientFragmentShader,
+				uniforms,
+				undefined, // default WebGL context attributes
+				speed,
+				startFrame,
+				minPixelRatio,
+				maxPixelCount
+			);
+		} catch {
+			// WebGL not supported -- CSS gradient fallback is visible
+			return;
+		}
+
+		// Clean up on Astro View Transition navigation
+		function cleanup() {
+			mount?.dispose();
+			mount = null;
+			document.removeEventListener('astro:before-swap', cleanup);
+		}
+
+		document.addEventListener('astro:before-swap', cleanup);
+	}
+
+	// Run on initial load
+	initMeshGradient();
+
+	// Re-run after Astro View Transition completes
+	document.addEventListener('astro:after-swap', initMeshGradient);
+</script>
