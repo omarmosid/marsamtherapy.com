@@ -4,6 +4,7 @@ import "../styles/global.css";
 import Header from "../components/shared/Header.astro";
 import Footer from "../components/shared/Footer.astro";
 import MeshGradientBg from "../components/shared/MeshGradientBg.astro";
+import PracticeUpdateBanner from "../components/shared/PracticeUpdateBanner.astro";
 
 interface Props {
   title: string;
@@ -103,8 +104,9 @@ const fullTitle = `${title} | Marsam Therapy`;
     <!-- Fixed full-viewport shader background -->
     <MeshGradientBg />
 
+    <PracticeUpdateBanner />
     <Header />
-    <main class="flex-1 pt-16 sm:pt-20">
+    <main class="flex-1 pt-[calc(var(--banner-height,0px)+4rem)] sm:pt-[calc(var(--banner-height,0px)+5rem)]">
       <slot />
     </main>
     <Footer />

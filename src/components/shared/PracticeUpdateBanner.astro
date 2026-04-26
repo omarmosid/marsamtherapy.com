@@ -1,0 +1,86 @@
+<aside
+	id="practice-update-banner"
+	class="fixed inset-x-0 top-0 z-[60] hidden bg-primary px-4 py-3 text-night shadow-lg"
+	aria-label="Practice update"
+>
+	<div class="mx-auto flex max-w-6xl items-center gap-3">
+		<p class="flex-1 text-sm font-semibold sm:text-center sm:text-base">
+			I'm currently on a short break and not accepting new clients.
+			<a
+				href="/blog/taking-a-short-break"
+				class="underline underline-offset-4 hover:text-night-light"
+			>
+				Read more
+			</a>
+		</p>
+
+		<button
+			type="button"
+			id="practice-update-banner-close"
+			class="-mr-2 rounded-full p-2 transition-colors hover:bg-night/10 focus:outline-none focus:ring-2 focus:ring-night/40"
+			aria-label="Dismiss practice update"
+		>
+			<svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+				<path d="M5.28 4.22a.75.75 0 0 0-1.06 1.06L8.94 10l-4.72 4.72a.75.75 0 1 0 1.06 1.06L10 11.06l4.72 4.72a.75.75 0 1 0 1.06-1.06L11.06 10l4.72-4.72a.75.75 0 0 0-1.06-1.06L10 8.94 5.28 4.22Z" />
+			</svg>
+		</button>
+	</div>
+</aside>
+
+<script is:inline>
+	(() => {
+		const bannerKey = 'practice-update-banner-dismissed';
+		const banner = document.getElementById('practice-update-banner');
+		const closeButton = document.getElementById('practice-update-banner-close');
+
+		const isDismissed = () => {
+			try {
+				return sessionStorage.getItem(bannerKey) === 'true';
+			} catch {
+				return false;
+			}
+		};
+
+		const dismiss = () => {
+			try {
+				sessionStorage.setItem(bannerKey, 'true');
+			} catch {
+				// Ignore storage failures; the banner can still close for this page view.
+			}
+		};
+
+		const setBannerHeight = (height) => {
+			document.documentElement.style.setProperty('--banner-height', `${height}px`);
+		};
+
+		const showBanner = () => {
+			if (!banner) return;
+
+			banner.classList.remove('hidden');
+			setBannerHeight(banner.offsetHeight);
+		};
+
+		const hideBanner = () => {
+			if (!banner) return;
+
+			banner.classList.add('hidden');
+			setBannerHeight(0);
+		};
+
+		if (isDismissed()) {
+			hideBanner();
+		} else {
+			showBanner();
+		}
+
+		closeButton?.addEventListener('click', () => {
+			dismiss();
+			hideBanner();
+		});
+
+		window.addEventListener('resize', () => {
+			if (!banner || banner.classList.contains('hidden')) return;
+			setBannerHeight(banner.offsetHeight);
+		});
+	})();
+</script>
