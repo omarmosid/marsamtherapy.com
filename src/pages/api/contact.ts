@@ -6,9 +6,18 @@ interface ContactFormData {
 	name: string;
 	email: string;
 	phone?: string;
+	location: string;
 	subject: string;
 	message: string;
 	'cf-turnstile-response'?: string;
+}
+
+interface CloudflareRequest extends Request {
+	cf?: {
+		city?: string;
+		region?: string;
+		country?: string;
+	};
 }
 
 interface TurnstileResponse {
@@ -59,7 +68,10 @@ export const POST: APIRoute = async ({ request, locals }) => {
 		return jsonResponse({ success: false, error: 'Invalid request body.' }, 400);
 	}
 
-	const { name, email, phone, subject, message } = body;
+	const { name, email, phone, location, subject, message } = body;
+	const ipAddress = request.headers.get('CF-Connecting-IP') ?? 'unknown';
+	const cf = (request as CloudflareRequest).cf;
+	const detectedLocation = [cf?.city, cf?.region, cf?.country].filter(Boolean).join(', ') || 'unknown';
 
 	// Validate required fields
 	if (!name?.trim()) {
@@ -67,6 +79,9 @@ export const POST: APIRoute = async ({ request, locals }) => {
 	}
 	if (!email?.trim() || !EMAIL_REGEX.test(email)) {
 		return jsonResponse({ success: false, error: 'A valid email address is required.' }, 400);
+	}
+	if (!location?.trim()) {
+		return jsonResponse({ success: false, error: 'Location is required.' }, 400);
 	}
 	if (!subject?.trim()) {
 		return jsonResponse({ success: false, error: 'Subject is required.' }, 400);
@@ -83,8 +98,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
 			return jsonResponse({ success: false, error: 'Please complete the verification challenge.' }, 400);
 		}
 
-		const remoteIp = request.headers.get('CF-Connecting-IP');
-		const result = await verifyTurnstile(token, turnstileSecret, remoteIp);
+		const result = await verifyTurnstile(token, turnstileSecret, ipAddress);
 
 		if (!result.success) {
 			console.error('Turnstile verification failed:', result['error-codes']);
@@ -116,6 +130,18 @@ export const POST: APIRoute = async ({ request, locals }) => {
 						<td style="padding: 8px 12px;">${escapeHtml(phone.trim())}</td>
 					</tr>
 					` : ''}
+					<tr>
+						<td style="padding: 8px 12px; font-weight: bold; color: #234030;">Location</td>
+						<td style="padding: 8px 12px;">${escapeHtml(location.trim())}</td>
+					</tr>
+					<tr style="background-color: #f9f9f9;">
+						<td style="padding: 8px 12px; font-weight: bold; color: #234030;">IP Address</td>
+						<td style="padding: 8px 12px;">${escapeHtml(ipAddress)}</td>
+					</tr>
+					<tr>
+						<td style="padding: 8px 12px; font-weight: bold; color: #234030;">Detected Location</td>
+						<td style="padding: 8px 12px;">${escapeHtml(detectedLocation)}</td>
+					</tr>
 					<tr style="background-color: #f9f9f9;">
 						<td style="padding: 8px 12px; font-weight: bold; color: #234030;">Subject</td>
 						<td style="padding: 8px 12px;">${escapeHtml(subject.trim())}</td>
@@ -137,6 +163,9 @@ export const POST: APIRoute = async ({ request, locals }) => {
 			`Name: ${name.trim()}`,
 			`Email: ${email.trim()}`,
 			phone?.trim() ? `Phone: ${phone.trim()}` : null,
+			`Location: ${location.trim()}`,
+			`IP Address: ${ipAddress}`,
+			`Detected Location: ${detectedLocation}`,
 			`Subject: ${subject.trim()}`,
 			``,
 			`Message:`,
